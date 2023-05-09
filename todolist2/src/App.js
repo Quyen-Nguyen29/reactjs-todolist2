@@ -26,19 +26,26 @@ function App() {
 
   //Function
 
-   /// save todo from localstorage
+  /// save todo from localstorage
   useEffect(() => {
-    const savedData = JSON.parse(localStorage.getItem('todos'));  
-    // setTodos (savedData)
+    const savedData = JSON.parse(localStorage.getItem('todos'));
+
+    if (savedData) {
+      setTodos(savedData)
+
+    }
     console.log("savedData", savedData)
 
-  },[])
+  }, [])
 
-  
 
-   /// save todo to localstorage
-   useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos));
+  /// save todo to localstorage
+  useEffect(() => {
+    if (todos.length !== 0) {
+      // checks if the array is empty and if not it saves to localStorage.
+      localStorage.setItem('todos', JSON.stringify(todos));
+    }
+
   }, [todos]);
 
 
@@ -50,6 +57,7 @@ function App() {
   const handlingAddItem = (textInput) => {
     if (textInput === "") {
       alert("Please type your todo ")
+      return
     }
     setTodos([...todos, { 'id': todos.length + 1, "text": textInput, "status": unCompleted }])
     setInputText('');
@@ -125,10 +133,10 @@ function App() {
   }).filter(todo => todo.text.toLowerCase().includes(searchTerm.toLowerCase()));
 
 
- 
 
 
-  
+
+
 
 
 
